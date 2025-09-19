@@ -145,11 +145,11 @@ function Calculator() {
   return (
     <div className="w-full max-w-md">
       {/* Form Card */}
-      <div className="rounded-xl bg-white/90 dark:bg-slate-900/70 backdrop-blur p-5 shadow-xl ring-1 ring-black/5">
+      <div className="rounded-xl bg-white dark:bg-brand-4/60 backdrop-blur p-5 shadow-xl ring-1 ring-black/5">
         <form className="grid gap-3" onSubmit={onSubmit}>
           <label
             htmlFor="paycheck"
-            className="text-sm font-semibold text-primary-1 dark:text-primary-3"
+            className="text-sm font-semibold text-brand-4 dark:text-brand-2"
           >
             Enter Paycheck Amount
           </label>
@@ -160,13 +160,13 @@ function Calculator() {
             autoComplete="off"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="w-full rounded-lg border border-primary-3/60 bg-white px-3 py-2 text-primary-1 placeholder-primary-3/80 shadow-sm outline-none focus:border-primary-2 focus:ring-4 focus:ring-primary-2/30 dark:border-primary-1/50 dark:bg-slate-800 dark:text-primary-3 dark:placeholder-primary-3/70 dark:focus:border-primary-3 dark:focus:ring-primary-1/40"
+            className="w-full rounded-lg border border-brand-2/60 bg-white px-3 py-2 text-brand-4 placeholder-brand-3/50 shadow-sm outline-none focus:border-brand-3 focus:ring-4 focus:ring-brand-3/30 dark:border-brand-4/50 dark:bg-brand-4/30 dark:text-brand-1 dark:placeholder-brand-1/80 dark:focus:border-brand-2 dark:focus:ring-brand-4/40"
             required
             placeholder="1500 + 300"
           />
           <Button
             type="submit"
-            className="mt-2 inline-flex items-center justify-center rounded-lg border border-primary-2/40 bg-primary-3/10 px-4 py-2 text-sm font-semibold text-primary-1 shadow-sm transition hover:bg-primary-3/20 focus:outline-none focus:ring-4 focus:ring-primary-2/30 dark:border-primary-1/50 dark:bg-primary-1/20 dark:text-primary-3 dark:hover:bg-primary-1/30 dark:focus:ring-primary-1/40"
+            className="mt-2 inline-flex items-center justify-center rounded-lg border bg-brand-4 px-4 py-2 text-sm font-semibold text-brand-1 shadow-sm hover:bg-brand-4/80 focus:outline-none focus:ring-4 focus:ring-brand-4/40"
           >
             Submit
           </Button>
@@ -177,7 +177,7 @@ function Calculator() {
               setSettingsError(null);
               setSettingsOpen(true);
             }}
-            className="mt-2 inline-flex items-center justify-center rounded-lg border border-accent-2/40 bg-accent-3/20 px-4 py-2 text-sm font-semibold text-primary-1 shadow-sm transition hover:bg-accent-3/30 focus:outline-none focus:ring-4 focus:ring-accent-2/30 dark:border-accent-1/40 dark:bg-accent-1/20 dark:text-primary-3 dark:hover:bg-accent-1/30 dark:focus:ring-accent-1/40"
+            className="mt-2 inline-flex items-center justify-center rounded-lg border border-brand-2 bg-brand-2 px-4 py-2 text-sm font-semibold text-brand-4 shadow-sm transition hover:bg-brand-2/40 focus:outline-none focus:ring-4 focus:ring-brand-3/40 dark:border-brand-4/60 dark:bg-brand-4/30 dark:text-brand-1 dark:hover:bg-brand-4/40 dark:focus:ring-brand-4/40"
           >
             Settings
           </Button>
@@ -186,19 +186,19 @@ function Calculator() {
 
       {/* Results Card - only visible after valid submission */}
       {submittedAmount !== null && (
-        <div className="mt-6 rounded-xl bg-white/90 dark:bg-slate-900/70 backdrop-blur p-5 shadow-xl ring-1 ring-black/5">
+        <div className="mt-6 rounded-xl bg-white/90 dark:bg-brand-4/60 backdrop-blur p-5 shadow-xl ring-1 ring-black/5">
           <div className="mb-3">
-            <h2 className="text-lg font-semibold text-primary-1 dark:text-primary-3">
+            <h2 className="text-lg font-semibold text-brand-4 dark:text-brand-2">
               Allocation
             </h2>
-            <p className="text-sm text-primary-2 dark:text-primary-3/90">
+            <p className="text-sm text-brand-3/90 dark:text-brand-2/90">
               Based on paycheck amount {currency.format(submittedAmount)}
             </p>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">
               <thead>
-                <tr className="text-primary-1 dark:text-primary-3">
+                <tr className="text-brand-4 dark:text-brand-2">
                   <th className="px-3 py-2 font-semibold">Category</th>
                   <th className="px-3 py-2 font-semibold">Percent</th>
                   <th className="px-3 py-2 font-semibold">Amount</th>
@@ -208,29 +208,29 @@ function Calculator() {
                 {allocations.map((row) => (
                   <tr
                     key={row.key}
-                    className="border-t border-primary-3/50 dark:border-primary-1/40"
+                    className="border-t border-brand-2/60 dark:border-brand-4/40"
                   >
-                    <td className="px-3 py-2 text-primary-1 dark:text-primary-3">
+                    <td className="px-3 py-2 text-brand-4 dark:text-brand-2">
                       {row.label}
                     </td>
-                    <td className="px-3 py-2 text-primary-2 dark:text-primary-3/90">
+                    <td className="px-3 py-2 text-brand-3/90 dark:text-brand-2/90">
                       ({row.fraction})
                     </td>
-                    <td className="px-3 py-2 text-primary-1 dark:text-primary-3">
+                    <td className="px-3 py-2 text-brand-4 dark:text-brand-2">
                       {currency.format(row.amount)}
                     </td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
-                <tr className="border-t border-primary-3/60 dark:border-primary-1/40">
-                  <td className="px-3 py-2 font-semibold text-primary-1 dark:text-primary-3">
+                <tr className="border-t border-brand-2/60 dark:border-brand-4/40">
+                  <td className="px-3 py-2 font-semibold text-brand-4 dark:text-brand-2">
                     Total
                   </td>
-                  <td className="px-3 py-2 text-primary-2 dark:text-primary-3/90">
+                  <td className="px-3 py-2 text-brand-3/90 dark:text-brand-2/90">
                     100%
                   </td>
-                  <td className="px-3 py-2 font-semibold text-primary-1 dark:text-primary-3">
+                  <td className="px-3 py-2 font-semibold text-brand-4 dark:text-brand-2">
                     {currency.format(
                       allocations.reduce((sum, r) => sum + r.amount, 0)
                     )}
@@ -243,7 +243,7 @@ function Calculator() {
             <Button
               type="button"
               onClick={onCopyTable}
-              className="inline-flex items-center gap-1 rounded-md border border-accent-2/40 bg-accent-3/20 px-3 py-1.5 text-xs font-medium text-primary-1 shadow-sm transition hover:bg-accent-3/30 focus:outline-none focus:ring-4 focus:ring-accent-2/30 dark:border-accent-1/40 dark:bg-accent-1/20 dark:text-primary-3 dark:hover:bg-accent-1/30 dark:focus:ring-accent-1/40"
+              className="inline-flex items-center gap-1 rounded-md border border-brand-2 bg-brand-1 px-3 py-1.5 text-xs font-medium text-brand-4 shadow-sm transition hover:bg-brand-2/40 focus:outline-none focus:ring-4 focus:ring-brand-2/40 dark:border-brand-4/60 dark:bg-brand-4/30 dark:text-brand-1 dark:hover:bg-brand-4/40 dark:focus:ring-brand-4/40"
               title="Copy table for Notion"
             >
               {copied ? "Copied!" : "Copy table"}
@@ -283,7 +283,9 @@ function Calculator() {
           }}
           onAddCategory={() => {
             const newCat: Category = {
-              key: `new-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+              key: `new-${Date.now()}-${Math.random()
+                .toString(36)
+                .slice(2, 6)}`,
               label: "New Category",
               fraction: 0,
             };

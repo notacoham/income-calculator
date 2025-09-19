@@ -3,17 +3,16 @@
 /* stylelint-disable at-rule-no-unknown */
 @theme {
   /* Font tokens for Tailwind utilities (font-sans, font-serif) */
-  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Avenir, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Avenir,
+    Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji",
+    sans-serif;
   --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
 
-  /* Color tokens (available as text-primary-1, bg-primary-1, etc.) */
-  --color-primary-1: #27465c;
-  --color-primary-2: #47748b;
-  --color-primary-3: #99bfd5;
-
-  --color-accent-1: #e95c6c;
-  --color-accent-2: #f7a088;
-  --color-accent-3: #eccca6;
+  /* Brand color scale (lightest → darkest) */
+  --color-brand-1: #eaf9e7;
+  --color-brand-2: #c0e6ba;
+  --color-brand-3: #4ca771;
+  --color-brand-4: #013237;
 }
 /* stylelint-enable at-rule-no-unknown */
 
@@ -32,12 +31,10 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Aliases for direct CSS usage */
-  --c-primary-1: var(--color-primary-1);
-  --c-primary-2: var(--color-primary-2);
-  --c-primary-3: var(--color-primary-3);
-  --c-accent-1: var(--color-accent-1);
-  --c-accent-2: var(--color-accent-2);
-  --c-accent-3: var(--color-accent-3);
+  --c-brand-1: var(--color-brand-1);
+  --c-brand-2: var(--color-brand-2);
+  --c-brand-3: var(--color-brand-3);
+  --c-brand-4: var(--color-brand-4);
 }
 
 /* Typography: Headings use Playfair Display italic; body text, paragraphs, and labels use Poppins */
@@ -53,7 +50,8 @@ h6 {
 
 p,
 label {
-  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Avenir,
+    Helvetica, Arial, sans-serif;
   font-weight: 400;
 }
 
@@ -117,13 +115,6 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -132,8 +123,5 @@ button:focus-visible {
   }
   a:hover {
     color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }

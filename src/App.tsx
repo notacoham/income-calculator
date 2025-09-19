@@ -6,7 +6,14 @@ function App() {
   return (
     <>
       <Home />
-      <ToastContainer position="bottom-right" autoClose={2000} newestOnTop closeOnClick pauseOnHover theme="colored" />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 }
