@@ -39,7 +39,7 @@ export default function SettingsModal({
       role="dialog"
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-2xl rounded-xl bg-white p-6 shadow-xl ring-1 ring-black/5 dark:bg-slate-900">
+      <div className="relative z-10 w-full max-w-2xl rounded-xl bg-white p-4 sm:p-6 shadow-xl ring-1 ring-black/5 dark:bg-slate-900 max-h-[80vh] overflow-y-auto">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
             Settings
@@ -53,19 +53,19 @@ export default function SettingsModal({
             +
           </Button>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <div>
             <h3 className="mb-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
               Categories
             </h3>
             <div className="space-y-2">
               {draftCategories.map((cat, idx) => (
-                <div key={cat.key} className="flex items-center gap-2">
+                <div key={cat.key} className="flex items-center gap-1 sm:gap-2">
                   <input
                     type="text"
                     value={cat.label}
                     onChange={(e) => onLabelChange(idx, e.target.value)}
-                    className="w-full rounded-md border border-slate-300 bg-white px-2 py-1 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    className="w-full rounded-md border border-slate-300 bg-white px-1 py-1 text-xs sm:px-2 sm:text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                   />
                 </div>
               ))}
@@ -77,7 +77,7 @@ export default function SettingsModal({
             </h3>
             <div className="space-y-2">
               {draftCategories.map((cat, idx) => (
-                <div key={cat.key + "-val"} className="flex items-center gap-2">
+                <div key={cat.key + "-val"} className="flex items-center gap-1 sm:gap-2">
                   <input
                     type="number"
                     min={0}
@@ -91,13 +91,13 @@ export default function SettingsModal({
                         onFractionChange(idx, clamped);
                       }
                     }}
-                    className="w-full rounded-md border border-slate-300 bg-white px-2 py-1 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    className="w-full rounded-md border border-slate-300 bg-white px-1 py-1 text-xs sm:px-2 sm:text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                   />
                   <Button
                     type="button"
                     title="Remove category"
                     onClick={() => onRemoveCategory(idx)}
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-red-300 bg-white text-red-600 shadow-sm transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200 dark:border-red-700 dark:bg-slate-800 dark:text-red-400 dark:hover:bg-slate-700"
+                    className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full border border-red-300 bg-white text-red-600 shadow-sm transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200 dark:border-red-700 dark:bg-slate-800 dark:text-red-400 dark:hover:bg-slate-700"
                   >
                     −
                   </Button>
