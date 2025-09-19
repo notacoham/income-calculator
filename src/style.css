@@ -1,7 +1,24 @@
 @import "tailwindcss";
 
+/* stylelint-disable at-rule-no-unknown */
+@theme {
+  /* Font tokens for Tailwind utilities (font-sans, font-serif) */
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Avenir, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+
+  /* Color tokens (available as text-primary-1, bg-primary-1, etc.) */
+  --color-primary-1: #27465c;
+  --color-primary-2: #47748b;
+  --color-primary-3: #99bfd5;
+
+  --color-accent-1: #e95c6c;
+  --color-accent-2: #f7a088;
+  --color-accent-3: #eccca6;
+}
+/* stylelint-enable at-rule-no-unknown */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.5;
   font-weight: 400;
 
@@ -13,6 +30,31 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Aliases for direct CSS usage */
+  --c-primary-1: var(--color-primary-1);
+  --c-primary-2: var(--color-primary-2);
+  --c-primary-3: var(--color-primary-3);
+  --c-accent-1: var(--color-accent-1);
+  --c-accent-2: var(--color-accent-2);
+  --c-accent-3: var(--color-accent-3);
+}
+
+/* Typography: Headings use Playfair Display italic; body text, paragraphs, and labels use Poppins */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+
+p,
+label {
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
 }
 
 a {

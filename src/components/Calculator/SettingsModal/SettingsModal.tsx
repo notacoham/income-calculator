@@ -38,24 +38,27 @@ export default function SettingsModal({
       aria-modal="true"
       role="dialog"
     >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
       <div className="relative z-10 w-full max-w-2xl rounded-xl bg-white p-4 sm:p-6 shadow-xl ring-1 ring-black/5 dark:bg-slate-900 max-h-[80vh] overflow-y-auto">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+          <h2 className="text-lg font-semibold text-primary-1 dark:text-primary-3">
             Settings
           </h2>
           <Button
             type="button"
             title="Add category"
             onClick={onAddCategory}
-            className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-200 dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:focus:ring-emerald-900/40"
+            className="inline-flex items-center justify-center rounded-full border border-accent-2/40 bg-accent-3/20 px-3 py-1.5 text-xs font-semibold text-primary-1 shadow-sm transition hover:bg-accent-3/30 focus:outline-none focus:ring-4 focus:ring-accent-2/30 dark:border-accent-1/40 dark:bg-accent-1/20 dark:text-primary-3 dark:hover:bg-accent-1/30 dark:focus:ring-accent-1/40"
           >
             +
           </Button>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <h3 className="mb-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
+            <h3 className="mb-2 text-sm font-semibold text-primary-1 dark:text-primary-3">
               Categories
             </h3>
             <div className="space-y-2">
@@ -65,19 +68,22 @@ export default function SettingsModal({
                     type="text"
                     value={cat.label}
                     onChange={(e) => onLabelChange(idx, e.target.value)}
-                    className="w-full rounded-md border border-slate-300 bg-white px-1 py-1 text-xs sm:px-2 sm:text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    className="w-full rounded-md border border-primary-3/60 bg-white px-1 py-1 text-xs sm:px-2 sm:text-sm text-primary-1 placeholder-primary-3/80 shadow-sm outline-none focus:border-primary-2 focus:ring-2 focus:ring-primary-2/30 dark:border-primary-1/50 dark:bg-slate-800 dark:text-primary-3"
                   />
                 </div>
               ))}
             </div>
           </div>
           <div>
-            <h3 className="mb-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
+            <h3 className="mb-2 text-sm font-semibold text-primary-1 dark:text-primary-3">
               Values (fractions 0–1)
             </h3>
             <div className="space-y-2">
               {draftCategories.map((cat, idx) => (
-                <div key={cat.key + "-val"} className="flex items-center gap-1 sm:gap-2">
+                <div
+                  key={cat.key + "-val"}
+                  className="flex items-center gap-1 sm:gap-2"
+                >
                   <input
                     type="number"
                     min={0}
@@ -91,7 +97,7 @@ export default function SettingsModal({
                         onFractionChange(idx, clamped);
                       }
                     }}
-                    className="w-full rounded-md border border-slate-300 bg-white px-1 py-1 text-xs sm:px-2 sm:text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    className="w-full rounded-md border border-primary-3/60 bg-white px-1 py-1 text-xs sm:px-2 sm:text-sm text-primary-1 placeholder-primary-3/80 shadow-sm outline-none focus:border-primary-2 focus:ring-2 focus:ring-primary-2/30 dark:border-primary-1/50 dark:bg-slate-800 dark:text-primary-3"
                   />
                   <Button
                     type="button"
@@ -108,7 +114,7 @@ export default function SettingsModal({
         </div>
         {/* Total and validation */}
         <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-slate-700 dark:text-slate-300">
+          <div className="text-sm text-primary-2 dark:text-primary-3/90">
             Total fraction:{" "}
             <span className="font-semibold">{total.toFixed(2)}</span>
           </div>
@@ -122,14 +128,14 @@ export default function SettingsModal({
           <Button
             type="button"
             onClick={onSave}
-            className="mr-2 inline-flex items-center gap-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-200 dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:focus:ring-emerald-900/40"
+            className="mr-2 inline-flex items-center gap-1 rounded-md bg-primary-2 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-primary-1 focus:outline-none focus:ring-4 focus:ring-primary-2/30 dark:bg-primary-1 dark:hover:bg-primary-1/90 dark:text-primary-3 dark:focus:ring-primary-1/40"
           >
             Save
           </Button>
           <Button
             type="button"
             onClick={onClose}
-            className="inline-flex items-center gap-1 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700/80 dark:focus:ring-slate-900/40"
+            className="inline-flex items-center gap-1 rounded-md border border-accent-2/40 bg-accent-3/20 px-3 py-1.5 text-xs font-medium text-primary-1 shadow-sm transition hover:bg-accent-3/30 focus:outline-none focus:ring-4 focus:ring-accent-2/30 dark:border-accent-1/40 dark:bg-accent-1/20 dark:text-primary-3 dark:hover:bg-accent-1/30 dark:focus:ring-accent-1/40"
           >
             Close
           </Button>

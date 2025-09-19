@@ -149,7 +149,7 @@ function Calculator() {
         <form className="grid gap-3" onSubmit={onSubmit}>
           <label
             htmlFor="paycheck"
-            className="text-sm font-semibold text-slate-800 dark:text-slate-200"
+            className="text-sm font-semibold text-primary-1 dark:text-primary-3"
           >
             Enter Paycheck Amount
           </label>
@@ -160,13 +160,13 @@ function Calculator() {
             autoComplete="off"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:border-indigo-400 dark:focus:ring-indigo-900/40"
+            className="w-full rounded-lg border border-primary-3/60 bg-white px-3 py-2 text-primary-1 placeholder-primary-3/80 shadow-sm outline-none focus:border-primary-2 focus:ring-4 focus:ring-primary-2/30 dark:border-primary-1/50 dark:bg-slate-800 dark:text-primary-3 dark:placeholder-primary-3/70 dark:focus:border-primary-3 dark:focus:ring-primary-1/40"
             required
             placeholder="1500 + 300"
           />
           <Button
             type="submit"
-            className="mt-2 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700/80 dark:focus:ring-slate-900/40"
+            className="mt-2 inline-flex items-center justify-center rounded-lg border border-primary-2/40 bg-primary-3/10 px-4 py-2 text-sm font-semibold text-primary-1 shadow-sm transition hover:bg-primary-3/20 focus:outline-none focus:ring-4 focus:ring-primary-2/30 dark:border-primary-1/50 dark:bg-primary-1/20 dark:text-primary-3 dark:hover:bg-primary-1/30 dark:focus:ring-primary-1/40"
           >
             Submit
           </Button>
@@ -177,7 +177,7 @@ function Calculator() {
               setSettingsError(null);
               setSettingsOpen(true);
             }}
-            className="mt-2 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700/80 dark:focus:ring-slate-900/40"
+            className="mt-2 inline-flex items-center justify-center rounded-lg border border-accent-2/40 bg-accent-3/20 px-4 py-2 text-sm font-semibold text-primary-1 shadow-sm transition hover:bg-accent-3/30 focus:outline-none focus:ring-4 focus:ring-accent-2/30 dark:border-accent-1/40 dark:bg-accent-1/20 dark:text-primary-3 dark:hover:bg-accent-1/30 dark:focus:ring-accent-1/40"
           >
             Settings
           </Button>
@@ -188,17 +188,17 @@ function Calculator() {
       {submittedAmount !== null && (
         <div className="mt-6 rounded-xl bg-white/90 dark:bg-slate-900/70 backdrop-blur p-5 shadow-xl ring-1 ring-black/5">
           <div className="mb-3">
-            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            <h2 className="text-lg font-semibold text-primary-1 dark:text-primary-3">
               Allocation
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-300">
+            <p className="text-sm text-primary-2 dark:text-primary-3/90">
               Based on paycheck amount {currency.format(submittedAmount)}
             </p>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">
               <thead>
-                <tr className="text-slate-700 dark:text-slate-300">
+                <tr className="text-primary-1 dark:text-primary-3">
                   <th className="px-3 py-2 font-semibold">Category</th>
                   <th className="px-3 py-2 font-semibold">Percent</th>
                   <th className="px-3 py-2 font-semibold">Amount</th>
@@ -208,29 +208,29 @@ function Calculator() {
                 {allocations.map((row) => (
                   <tr
                     key={row.key}
-                    className="border-t border-slate-200/70 dark:border-slate-700/60"
+                    className="border-t border-primary-3/50 dark:border-primary-1/40"
                   >
-                    <td className="px-3 py-2 text-slate-900 dark:text-slate-100">
+                    <td className="px-3 py-2 text-primary-1 dark:text-primary-3">
                       {row.label}
                     </td>
-                    <td className="px-3 py-2 text-slate-700 dark:text-slate-300">
+                    <td className="px-3 py-2 text-primary-2 dark:text-primary-3/90">
                       ({row.fraction})
                     </td>
-                    <td className="px-3 py-2 text-slate-900 dark:text-slate-100">
+                    <td className="px-3 py-2 text-primary-1 dark:text-primary-3">
                       {currency.format(row.amount)}
                     </td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
-                <tr className="border-t border-slate-300/70 dark:border-slate-700/60">
-                  <td className="px-3 py-2 font-semibold text-slate-900 dark:text-slate-100">
+                <tr className="border-t border-primary-3/60 dark:border-primary-1/40">
+                  <td className="px-3 py-2 font-semibold text-primary-1 dark:text-primary-3">
                     Total
                   </td>
-                  <td className="px-3 py-2 text-slate-700 dark:text-slate-300">
+                  <td className="px-3 py-2 text-primary-2 dark:text-primary-3/90">
                     100%
                   </td>
-                  <td className="px-3 py-2 font-semibold text-slate-900 dark:text-slate-100">
+                  <td className="px-3 py-2 font-semibold text-primary-1 dark:text-primary-3">
                     {currency.format(
                       allocations.reduce((sum, r) => sum + r.amount, 0)
                     )}
@@ -243,7 +243,7 @@ function Calculator() {
             <Button
               type="button"
               onClick={onCopyTable}
-              className="inline-flex items-center gap-1 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700/80 dark:focus:ring-slate-900/40"
+              className="inline-flex items-center gap-1 rounded-md border border-accent-2/40 bg-accent-3/20 px-3 py-1.5 text-xs font-medium text-primary-1 shadow-sm transition hover:bg-accent-3/30 focus:outline-none focus:ring-4 focus:ring-accent-2/30 dark:border-accent-1/40 dark:bg-accent-1/20 dark:text-primary-3 dark:hover:bg-accent-1/30 dark:focus:ring-accent-1/40"
               title="Copy table for Notion"
             >
               {copied ? "Copied!" : "Copy table"}
