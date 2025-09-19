@@ -1,10 +1,8 @@
-import { useMemo, useState } from "react";
-
-type Category = {
-  key: string;
-  label: string;
-  fraction: number; // e.g., 0.34 for 34%
-};
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
+import Button from "../shared/Button";
+import SettingsModal from "./SettingsModal/SettingsModal";
+import type { Category } from "../../types/category";
 
 const CATEGORIES: Category[] = [
   { key: "rent", label: "Rent", fraction: 0.34 },
@@ -20,6 +18,49 @@ function Calculator() {
   const [input, setInput] = useState("");
   const [submittedAmount, setSubmittedAmount] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>(CATEGORIES);
+  const [draftCategories, setDraftCategories] = useState<Category[] | null>(
+    null
+  );
+  const [settingsError, setSettingsError] = useState<string | null>(null);
+
+  // Persist categories to localStorage and hydrate on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("income-calculator.categories");
+      if (raw) {
+        const parsed: Category[] = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          // Basic shape validation
+          const valid = parsed.every(
+            (c) =>
+              typeof c?.key === "string" &&
+              typeof c?.label === "string" &&
+              typeof c?.fraction === "number"
+          );
+          if (valid) {
+            setCategories(parsed);
+          }
+        }
+      }
+    } catch (e) {
+      // ignore corrupt storage
+      console.warn("Failed to load categories from localStorage", e);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "income-calculator.categories",
+        JSON.stringify(categories)
+      );
+    } catch (e) {
+      console.warn("Failed to save categories to localStorage", e);
+    }
+  }, [categories]);
 
   const currency = useMemo(
     () =>
@@ -29,11 +70,11 @@ function Calculator() {
 
   const allocations = useMemo(() => {
     const amt = submittedAmount ?? 0;
-    return CATEGORIES.map((c) => ({
+    return categories.map((c) => ({
       ...c,
       amount: amt * c.fraction,
     }));
-  }, [submittedAmount]);
+  }, [submittedAmount, categories]);
 
   function parseAdditionExpression(expr: string): number | null {
     // Allow numbers separated by '+' with optional whitespace, e.g., "1500 + 700 + 25.5"
@@ -55,11 +96,15 @@ function Calculator() {
     if (submittedAmount === null) return "";
     const header = `| Category | Percent | Amount |\n| --- | --- | --- |`;
     const rows = allocations
-      .map((r) => `| ${r.label} | (${r.fraction}) | ${currency.format(r.amount)} |`)
+      .map(
+        (r) => `| ${r.label} | (${r.fraction}) | ${currency.format(r.amount)} |`
+      )
       .join("\n");
     const total = allocations.reduce((sum, r) => sum + r.amount, 0);
     const totalRow = `| Total | 100% | ${currency.format(total)} |`;
-    const title = `Allocation based on paycheck ${currency.format(submittedAmount)}`;
+    const title = `Allocation based on paycheck ${currency.format(
+      submittedAmount
+    )}`;
     return `${title}\n\n${header}\n${rows}\n${totalRow}`;
   }
 
@@ -70,8 +115,10 @@ function Calculator() {
       await navigator.clipboard.writeText(md);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1500);
+      toast.success("Copied table to clipboard");
     } catch (err) {
       console.error("Failed to copy:", err);
+      toast.error("Failed to copy table");
     }
   }
 
@@ -81,13 +128,16 @@ function Calculator() {
     const fromAddition = parseAdditionExpression(input);
     if (fromAddition !== null && fromAddition >= 0) {
       setSubmittedAmount(fromAddition);
+      toast.success("Submitted amount updated");
     } else {
       // Fallback to plain number parse for robustness
       const val = Number(input);
       if (!isNaN(val) && isFinite(val) && val >= 0) {
         setSubmittedAmount(val);
+        toast.success("Submitted amount updated");
       } else {
         setSubmittedAmount(null);
+        toast.error("Please enter a valid number or addition expression");
       }
     }
   }
@@ -114,12 +164,23 @@ function Calculator() {
             required
             placeholder="1500 + 300"
           />
-          <button
+          <Button
             type="submit"
-            className="mt-1 inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-gray-500 shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:opacity-50 dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:focus:ring-emerald-900/40"
+            className="mt-2 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700/80 dark:focus:ring-slate-900/40"
           >
             Submit
-          </button>
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              setDraftCategories(categories.map((c) => ({ ...c })));
+              setSettingsError(null);
+              setSettingsOpen(true);
+            }}
+            className="mt-2 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700/80 dark:focus:ring-slate-900/40"
+          >
+            Settings
+          </Button>
         </form>
       </div>
 
@@ -179,16 +240,74 @@ function Calculator() {
             </table>
           </div>
           <div className="mt-4 flex justify-end">
-            <button
+            <Button
               type="button"
               onClick={onCopyTable}
               className="inline-flex items-center gap-1 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700/80 dark:focus:ring-slate-900/40"
               title="Copy table for Notion"
             >
               {copied ? "Copied!" : "Copy table"}
-            </button>
+            </Button>
           </div>
         </div>
+      )}
+      {settingsOpen && (
+        <SettingsModal
+          open={settingsOpen}
+          draftCategories={draftCategories}
+          error={settingsError}
+          onClose={() => {
+            // Discard changes
+            setDraftCategories(null);
+            setSettingsError(null);
+            setSettingsOpen(false);
+          }}
+          onSave={() => {
+            if (!draftCategories) return;
+            // Save and validate total equals 1.0
+            const total = draftCategories.reduce(
+              (sum, c) => sum + (Number(c.fraction) || 0),
+              0
+            );
+            const epsilon = 0.000001;
+            if (Math.abs(total - 1.0) > epsilon) {
+              setSettingsError("Fractions must sum to exactly 1.00");
+              toast.error("Fractions must sum to exactly 1.00");
+              return;
+            }
+            setCategories(draftCategories);
+            setDraftCategories(null);
+            setSettingsError(null);
+            setSettingsOpen(false);
+            toast.success("Settings saved");
+          }}
+          onAddCategory={() => {
+            const newCat: Category = {
+              key: `new-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+              label: "New Category",
+              fraction: 0,
+            };
+            setDraftCategories([...(draftCategories || []), newCat]);
+          }}
+          onRemoveCategory={(idx) => {
+            if (!draftCategories) return;
+            const next = draftCategories.filter((_, i) => i !== idx);
+            setDraftCategories(next);
+          }}
+          onLabelChange={(idx, value) => {
+            if (!draftCategories) return;
+            const next = [...draftCategories];
+            next[idx] = { ...next[idx], label: value };
+            setDraftCategories(next);
+          }}
+          onFractionChange={(idx, value) => {
+            if (!draftCategories) return;
+            const clamped = Math.max(0, Math.min(1, value));
+            const next = [...draftCategories];
+            next[idx] = { ...next[idx], fraction: clamped };
+            setDraftCategories(next);
+          }}
+        />
       )}
     </div>
   );
